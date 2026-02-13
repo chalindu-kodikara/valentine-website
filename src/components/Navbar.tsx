@@ -24,14 +24,22 @@ const Navbar = () => {
     setPlaying(!playing);
   };
 
-  // Auto-play music on mount
+  // Auto-play music on mount, retry on first user interaction if blocked
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        // Browser blocked autoplay, user will need to click play
-        setPlaying(false);
-      });
-    }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.play().catch(() => {
+      // Browser blocked autoplay — start on first interaction
+      setPlaying(false);
+      const resume = () => {
+        audio.play().then(() => setPlaying(true)).catch(() => {});
+        document.removeEventListener("click", resume);
+        document.removeEventListener("touchstart", resume);
+      };
+      document.addEventListener("click", resume, { once: true });
+      document.addEventListener("touchstart", resume, { once: true });
+    });
   }, []);
 
   return (
@@ -73,7 +81,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-      <audio ref={audioRef} src={ourSong} loop />
+      <audio ref={audioRef} src={ourSong} loop autoPlay />
     </nav>
   );
 };
