@@ -67,7 +67,7 @@ const Memories = () => {
           </button>
           <div className="max-w-7xl max-h-[90vh] relative" onClick={(e) => e.stopPropagation()}>
             <img
-              src={selectedPhoto.src}
+              src={`${import.meta.env.BASE_URL}${selectedPhoto.src.replace(/^\//, '')}`}
               alt={selectedPhoto.caption}
               className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
             />
@@ -104,7 +104,7 @@ const Memories = () => {
               style={{ animation: `fade-in-up 0.6s ease-out ${i * 0.1}s forwards`, opacity: 0 }}
             >
               <img
-                src={photo.src}
+                src={`${import.meta.env.BASE_URL}${photo.src.replace(/^\//, '')}`}
                 alt={photo.caption}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"

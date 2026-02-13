@@ -63,7 +63,7 @@ const Song = () => {
         💡 Place your song as <code className="bg-muted px-2 py-0.5 rounded text-xs">public/our-song.mp3</code>
       </p>
 
-      <audio ref={audioRef} src="/our-song.mp3" loop onEnded={() => setPlaying(false)} />
+      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}our-song.mp3`} loop onEnded={() => setPlaying(false)} />
     </div>
   );
 };
